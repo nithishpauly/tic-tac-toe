@@ -1,0 +1,95 @@
+
+#include <iostream> 
+using namespace std; 
+
+
+void playturn(char box[3][3]) 
+{ 
+	cout << "-------------\n"; 
+	for (int i = 0; i < 3; i++) { 
+		cout << "| "; 
+		for (int j = 0; j < 3; j++) { 
+			cout << box[i][j] << " | "; 
+		} 
+		cout << "\n-------------\n"; 
+	} 
+} 
+
+
+bool checkWin(char box[3][3], char contestant) 
+{ 
+	
+	for (int i = 0; i < 3; i++) { 
+		if (box[i][0] == contestant && box[i][1] == contestant 
+			&& box[i][2] == contestant) 
+			return true; 
+		if (box[0][i] == contestant && box[1][i] == contestant 
+			&& box[2][i] == contestant) 
+			return true; 
+	} 
+	if (box[0][0] == contestant && box[1][1] == contestant 
+		&& box[2][2] == contestant) 
+		return true; 
+	if (box[0][2] == contestant && box[1][1] ==contestant
+		&& box[2][0] == contestant) 
+		return true; 
+	return false; 
+} 
+
+int main() 
+{ 
+	 
+	char box[3][3] = { { ' ', ' ', ' ' }, 
+						{ ' ', ' ', ' ' }, 
+						{ ' ', ' ', ' ' } }; 
+	char contestant = 'X'; 
+	int row, col; 
+	int turn;
+
+	cout << "Welcome to Tic-Tac-Toe!\n"; 
+
+
+	for (turn = 0; turn < 9; turn++) { 
+	
+		playturn(box); 
+
+		
+		while (true) { 
+			cout << "Contestant " << contestant 
+				<< ", enter row (0-2) and column (0-2): "; 
+			cin >> row >> col; 
+
+			if (box[row][col] != ' ' || row < 0 || row > 2 
+				|| col < 0 || col > 2) { 
+				cout << "Invalid move. Try again.\n"; 
+			} 
+			else { 
+				break; // Valid input, exit the loop. 
+			} 
+		} 
+
+		
+		box[row][col] = player; 
+
+		
+		if (checkWin(box, contestant)) { 
+			playturn(box); 
+			cout << "Contestant " << contestant << " wins!\n"; 
+			break; 
+		} 
+
+		
+		player = (player == 'X') ? 'O' : 'X'; 
+	} 
+
+	
+	playturn(box); 
+
+	
+	if (turn == 9 && !checkWin(box, 'X') 
+		&& !checkWin(box, 'O')) { 
+		cout << "It's a draw!\n"; 
+	} 
+
+	return 0; 
+}
